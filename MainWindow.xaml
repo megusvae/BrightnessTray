@@ -10,7 +10,7 @@
         SnapsToDevicePixels="True" Topmost="True" Deactivated="Window_Deactivated" Activated="Window_Activated"
         Loaded="Window_Loaded" ShowInTaskbar="False" Background="Transparent"
         Closing="Window_Closing" GotKeyboardFocus="Window_GotKeyboardFocus" MouseWheel="Window_MouseWheel"
-        FocusManager.FocusedElement="{Binding ElementName=BrightnessSlider}" Icon="res/sun.ico" KeyUp="Window_KeyUp" KeyDown="Window_KeyDown">
+        Icon="res/sun.ico" KeyUp="Window_KeyUp" KeyDown="Window_KeyDown">
     <Window.Resources>
 
         <!-- Window border styles -->
@@ -34,6 +34,13 @@
             <Setter Property="Margin" Value="1" />
         </Style>
 
+        <!-- Style for monitor control groups -->
+        <Style x:Key="MonitorGroupStyle" TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="#FFD3D3D3" />
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+            <Setter Property="Padding" Value="15,10,15,10" />
+        </Style>
+
     </Window.Resources>
 
     <Border x:Name="WindowBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Style="{StaticResource AeroBorderFixStyle}">
@@ -41,18 +48,14 @@
             <Image x:Name="image" Height="22" Width="22"
                    Source="res/sun.png" Margin="0,0,0,15"
                    />
-            <Label x:Name="percentageLabel" Content="0%" Margin="0,0,0,10" HorizontalAlignment="Center" Padding="0"/>
-            <Slider x:Name="BrightnessSlider" Orientation="Vertical" Height="200" HorizontalAlignment="Center" TickPlacement="Both" TickFrequency="10" Maximum="100" ValueChanged="Slider_ValueChanged" SmallChange="1" LargeChange="10"
-                    Value="{Binding BrightnessValue, Mode=TwoWay}">
-                <Slider.Style>
-                    <Style TargetType="Slider">
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    </Style>
-                </Slider.Style>
-            </Slider>
+            
+            <!-- Monitor sliders container - displays horizontally arranged sliders for each monitor -->
+            <StackPanel x:Name="MonitorSlidersPanel" Orientation="Horizontal" HorizontalAlignment="Center" />
+            
             <Border BorderBrush="#FFDBDBDB" BorderThickness="0,1,0,0" Background="#FFF6F6F6" Padding="15" Margin="0,15,0,0">
                 <StackPanel>
                     <TextBlock VerticalAlignment="Bottom" d:LayoutOverrides="Width" ><Hyperlink TextDecorations="{x:Null}" Click="Hyperlink_Click"><Run Text="Turn off monitor"/></Hyperlink></TextBlock>
+                    <TextBlock VerticalAlignment="Bottom" d:LayoutOverrides="Width" Margin="0,5,0,0"><Hyperlink TextDecorations="{x:Null}" Click="SleepHyperlink_Click"><Run Text="Enter sleep mode"/></Hyperlink></TextBlock>
                 </StackPanel>
             </Border>
         </StackPanel>
